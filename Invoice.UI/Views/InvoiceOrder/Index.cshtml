@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Invoices";
+    Layout = "_Layout";
+}
+@model List<Invoice.DataTransferObject.DTOs.Invoice.GetInvoiceDTO>
+
+
+<div class="row gap-3">
+
+    <div class="card" style="width: 100%;">
+
+        <div class="card-body">
+            <a class="btn btn-success" asp-controller="InvoiceOrder" asp-action="Create">Add New</a>
+            <div class="card-title">
+                <h2>Invoices Listing</h2>
+            </div>
+
+            <table class="table table-bordered table-striped" id='tbllist' style="width: 100%;">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <td></td>
+                        <td>InvoiceNo</td>
+                        <td>Store</td>
+                        <td>Invoice Date</td>
+                        <td>Total</td>
+                        <td>Tax</td>
+                        <td>Net</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null)
+                    {
+                        var i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
+                                <td>
+                                    @item.SerialNo
+                                </td>
+                                <td>
+                                    @item.StoreName
+                                </td>
+                                <td>
+                                    @item.InvoiceDate
+                                </td>
+                                <td>
+                                    @item.Total
+                                </td>
+                                <td>
+                                    @item.Tax
+                                </td>
+                                <td>
+                                    @item.Net
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "InvoiceDetails", "InvoiceOrder", new { id = item.Id }, null)
+
+                                </td>
+                            </tr>
+                        }
+                        i++;
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<link href="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.css" rel="stylesheet">
+
+<script src="https://cdn.datatables.net/v/dt/dt-1.13.8/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        new DataTable('#tbllist');
+
+    });
+
+</script>
