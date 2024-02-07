@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.Application", "Invo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invoice.DataTransferObject", "Invoice.DataTransferObject\Invoice.DataTransferObject.csproj", "{428C0516-8696-4CA7-BD43-67279903EC4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoice.Application.Test", "Invoice.Application.Test\Invoice.Application.Test.csproj", "{8C554B0E-0FEB-4670-9C3A-523133F30E28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{428C0516-8696-4CA7-BD43-67279903EC4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{428C0516-8696-4CA7-BD43-67279903EC4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{428C0516-8696-4CA7-BD43-67279903EC4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C554B0E-0FEB-4670-9C3A-523133F30E28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C554B0E-0FEB-4670-9C3A-523133F30E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C554B0E-0FEB-4670-9C3A-523133F30E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C554B0E-0FEB-4670-9C3A-523133F30E28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

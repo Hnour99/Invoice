@@ -19,6 +19,7 @@ builder.Services.AddScoped<ISecurityService, SecurityService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+builder.Services.AddScoped<ICalculationService, CalculationService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 #region Api Versioning
 builder.Services.AddEndpointsApiExplorer();

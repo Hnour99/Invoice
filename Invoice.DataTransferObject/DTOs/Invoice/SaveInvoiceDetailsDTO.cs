@@ -10,22 +10,22 @@ namespace Invoice.DataTransferObject.DTOs.Invoice
 {
     public class SaveInvoiceDetailsDTO
     {
-        [Required]
+        [Required (ErrorMessage = "Qty is required")]
         public long Qty { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Price is required")]
         public double Price { get; set; }
-        [Required]
+        
         public double Net { get; set; }
-        [Required]
+        
         public double Total { get; set; }
         [Required]
         public double Discount { get; set; }
 
-        [Required]
+        
         public long StoreId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Item is required")]
         public long ItemId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Unit is required")]
         public long UnitId { get; set; }
 
 

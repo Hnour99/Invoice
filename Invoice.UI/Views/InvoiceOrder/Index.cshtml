@@ -12,7 +12,7 @@
         <div class="card-body">
             <a class="btn btn-success" asp-controller="InvoiceOrder" asp-action="Create">Add New</a>
             <div class="card-title">
-                <h2>Invoices Listing</h2>
+                <h2>Invoices</h2>
             </div>
 
             <table class="table table-bordered table-striped" id='tbllist' style="width: 100%;">
@@ -31,12 +31,12 @@
                 <tbody>
                     @if (Model != null)
                     {
-                        var i = 1;
+                       
                         foreach (var item in Model)
                         {
                             <tr>
                                 <td>
-                                    @i
+                                    
                                 </td>
                                 <td>
                                     @item.SerialNo
@@ -62,7 +62,7 @@
                                 </td>
                             </tr>
                         }
-                        i++;
+                        
                     }
                 </tbody>
 

@@ -11,7 +11,8 @@ namespace Invoice.Application.Interfaces
 {
     public interface IInvoiceService
     {
-        Task<Result<GetInvoiceDTO>> SaveInvoice(SaveInvoiceDTO invoiceDto);
+        Task<Result<GetInvoiceDTO>> SaveInvoice(SaveInvoiceDTO invoiceDto, string userId);
         Task<Result<List<GetInvoiceDTO>>> GetInvoices();
+        Task<Result<GetInvoiceDTO>> GetInvoiceById(long id);
     }
 }

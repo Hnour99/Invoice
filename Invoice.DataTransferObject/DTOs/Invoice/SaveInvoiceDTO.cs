@@ -27,7 +27,7 @@ namespace Invoice.DataTransferObject.DTOs.Invoice
         public double Tax { get; set; }
         [Required]
         public long StoreId { get; set; }
-        public SaveInvoiceDetailsDTO SaveInvoiceDetails { get; set; }
+        
 
     }
 }

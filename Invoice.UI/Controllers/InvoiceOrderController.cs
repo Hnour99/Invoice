@@ -9,6 +9,7 @@ using Invoice.DataTransferObject.DTOs.Unit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Invoice.DataTransferObject.Generic;
 
 namespace Invoice.UI.Controllers
 {
@@ -49,7 +50,8 @@ namespace Invoice.UI.Controllers
         [ServiceFilter(typeof(ActionFilteToken))]
         public async Task<IActionResult> InvoiceDetails(long id)
         {
-            return View();
+            var invoice= GetInvoiceById(id).Result;
+            return View(invoice);
         }
         [HttpPost]
         [Authorize(Roles = "Admin")]
@@ -75,7 +77,7 @@ namespace Invoice.UI.Controllers
                 var invoiceDto = new SaveInvoiceDTO();
                 invoiceDto.StoreId = Convert.ToInt64(storeId);
                 invoiceDto.SerialNo = Convert.ToInt64(serialNo);
-                invoiceDto.InvoiceDate = Convert.ToDateTime(invoiceDate);
+                invoiceDto.InvoiceDate = DateTime.Now;
                 invoiceDto.Total = Convert.ToDouble(totalAmount);
                 invoiceDto.Tax = Convert.ToDouble(tax);
                 invoiceDto.Net = Convert.ToDouble(net);
@@ -85,22 +87,63 @@ namespace Invoice.UI.Controllers
                 var request = new RestRequest("InvoiceOrder/SaveInvoice");
                 var token = HttpContext.Session.GetString("token");
                 request.AddHeader("content-type", "application/json");
-                request.AddHeader("content-Length", "0");
                 request.AddHeader("Authorization", "Bearer " + token);
                 var json = JsonSerializer.Serialize(invoiceDto);
                 request.AddJsonBody(json);
                 var response = await _client.PostAsync(request);
-                //var getInvoiceDTO = new GetInvoiceDTO();
-                //if (response.IsSuccessful)
-                //{
-                //    stores = JsonSerializer.Deserialize<Root<GetAllStoresDTO>>(response.Content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).value.ToList();
-                //}
-                return new JsonResult("Successfully");
+                var getInvoiceDTO = new GetInvoiceDTO();
+                if (response.IsSuccessful)
+                {
+                    
+
+                    return  Json(1);
+                }
+                return Json(0);
             }
 
           
             
-            return new JsonResult("Failed");
+            return  Json("0");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ServiceFilter(typeof(ActionFilteToken))]
+        public async Task<IActionResult> CalculateNetAfterDiscount(string discount, string total)
+        {
+            var request = new RestRequest($"Calculation/CalculateNetAfterDiscount?discount={Convert.ToDouble(discount)}&total={Convert.ToDouble(total)}");
+            var token = HttpContext.Session.GetString("token");
+            request.AddHeader("content-type", "application/json");
+           
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = await _client.ExecuteGetAsync(request);
+            
+            if (response.IsSuccessful)
+            {
+                total = JsonSerializer.Deserialize<double> (response.Content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).ToString();
+            }
+
+            return Json(total);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ServiceFilter(typeof(ActionFilteToken))]
+        public async Task<IActionResult> CalculateNetAfterTax(string tax, string total)
+        {
+            var request = new RestRequest($"Calculation/CalculateNetAfterTax?tax={Convert.ToDouble(tax)}&total={Convert.ToDouble(total)}");
+            var token = HttpContext.Session.GetString("token");
+            request.AddHeader("content-type", "application/json");
+            request.AddHeader("content-Length", "0");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = await _client.ExecuteGetAsync(request);
+
+            if (response.IsSuccessful)
+            {
+                total = JsonSerializer.Deserialize<double>(response.Content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }).ToString();
+            }
+
+            return Json(total);
         }
 
         private async Task<List<GetInvoiceDTO>> GetAllInvoices()
@@ -119,6 +162,24 @@ namespace Invoice.UI.Controllers
 
             return stores;
         }
+
+        private async Task<GetInvoiceDTO> GetInvoiceById(long id)
+        {
+            var request = new RestRequest($"InvoiceOrder/GetInvoiceById?id={id}");
+            var token = HttpContext.Session.GetString("token");
+            request.AddHeader("content-type", "application/json");
+            request.AddHeader("content-Length", "0");
+            request.AddHeader("Authorization", "Bearer " + token);
+            var response = await _client.ExecuteGetAsync(request);
+            var invoice = new GetInvoiceDTO();
+            if (response.IsSuccessful)
+            {
+                invoice = JsonSerializer.Deserialize<GetInvoiceDTO>(response.Content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+
+            return invoice;
+        }
+
         private async Task<List<GetAllStoresDTO>> GetAllStores()
         {
             var request = new RestRequest("Store/GetStores");

@@ -9,6 +9,12 @@ namespace Invoice.DataTransferObject.DTOs.Invoice
 {
     public class GetInvoiceDTO
     {
+        public GetInvoiceDTO()
+        {
+            InvoiceDetailss = new List<GetInvoiceDetailsDTO>();
+        }
+
+        public virtual ICollection<GetInvoiceDetailsDTO> InvoiceDetailss { get; set; }
         public long Id { get; set; }
         public string SerialNo { get; set; }
         public string Net { get; set; }

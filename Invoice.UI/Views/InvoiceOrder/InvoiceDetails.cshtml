@@ -1,5 +1,101 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Invoice.DataTransferObject.DTOs.Invoice.GetInvoiceDTO
 @{
+    ViewData["Title"] = "Invoices";
+    Layout = "_Layout";
 }
+<div class="row gap-3">
+
+
+
+    <div class="card" style="width: 100%">
+
+        <div class="card-body">
+            <div class="card-title">
+                <h2>Invoice</h2>
+            </div>
+
+            <div class="form-row gap-3">
+
+                <ul class="list-unstyled">
+
+                    <li class="text-muted mt-1"><span class="text-black">Invoice No :</span> #@Model.SerialNo</li>
+                    <li class="text-muted mt-1"><span class="text-black">Invoice Date :</span>@Model.InvoiceDate</li>
+                    <li class="text-muted mt-1"><span class="text-black">Store :</span> @Model.StoreName</li>
+                    <li class="text-muted mt-1"><span class="text-black">Total :</span> $@Model.Total</li>
+                    <li class="text-muted mt-1"><span class="text-black">Tax  :</span> @Model.Tax</li>
+                    <li class="text-muted mt-1"><span class="text-black">Net Amount :</span> $@Model.Net</li>
+                    <li class="text-black mt-1">April 17 2021</li>
+                </ul>
+            </div>
+            <div class="card" style="width: 100%">
+
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2>Invoice Details</h2>
+                    </div>
+                    <div class="form-row gap-3">
+
+                        <table class="table table-bordered table-striped" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <td>Item</td>
+
+                                    <td>Price </td>
+                                    <td>Quantity</td>
+                                    <td>Total</td>
+                                    <td> Discount</td>
+                                    <td>Net</td>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+
+                                    foreach (var item in Model.InvoiceDetailss)
+                                    {
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                                @item.ItemName
+                                            </td>
+                                            <td>
+                                                @item.Price
+                                            </td>
+                                            <td>
+                                                @item.Qty
+                                            </td>
+                                            <td>
+                                                @item.Total
+                                            </td>
+                                            <td>
+                                                @item.Discount
+                                            </td>
+                                            <td>
+                                                @item.Net
+                                            </td>
+
+                                        </tr>
+
+                                    }
+
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row gap-3">
+    <a asp-action="Index" asp-controller="InvoiceOrder" class="btn btn-check">
+        Back To List
+    </a>
+</div>

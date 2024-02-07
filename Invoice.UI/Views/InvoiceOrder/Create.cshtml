@@ -4,96 +4,107 @@
     Layout = "_Layout";
 }
 <div class="row gap-3">
+
+
+
     <div class="card" style="width: 100%">
-        <div class="card-title">
-            <h2>Create/Edit Employee</h2>
-        </div>
+
         <div class="card-body">
+            <div class="card-title">
+                <h2>Create</h2>
+            </div>
+            <form needs-validation novalidate>
 
-            <form>
+                <div class="form-row gap-3">
 
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="col-md-4">
-                            <label asp-for="SerialNo">Invoice No </label>
-                            <input type="text" asp-for="SerialNo" class="form-control" placeholder="Invoice No" id="SerialNo" required="required" />
-                            @Html.ValidationMessageFor(model => model.SerialNo, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4">
-                            <label asp-for="InvoiceDate">Inventory Date</label>
-                            @Html.Editor("InvoiceDate", new { htmlAttributes = new { @class = "form-control mydatepicker", @placeholder = "Invoice Date", id = "InvoiceDate", @required = "required" } })
-                            @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-md-4">
-                            <label asp-for="StoreId">Store</label>S
-                            @Html.DropDownListFor(model => model.StoreId,
-                                     new SelectList(@ViewBag.Stores, "Id", "Name"),
-                                     "Select Store",
-                                     new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger" })
-                        </div>
+                    <div class="col">
+                        <label asp-for="SerialNo">Invoice No </label>
+                        <input type="text" asp-for="SerialNo" class="form-control" placeholder="Invoice No" id="SerialNo" required="required" />
+                        @Html.ValidationMessageFor(model => model.SerialNo, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        <label asp-for="InvoiceDate">Inventory Date</label>
+                        @Html.Editor("InvoiceDate", new { htmlAttributes = new { @class = "form-control", @type = "date", @placeholder = "Invoice Date", id = "InvoiceDate", @required = "required" } })
+                        @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        <label asp-for="StoreId">Store</label>S
+                        @Html.DropDownListFor(model => model.StoreId,
+                                 new SelectList(@ViewBag.Stores, "Id", "Name"),
+                                 "Select Store",
+                                 new { @class = "form-control", @required = "required", Id = "Store" })
+                        @Html.ValidationMessageFor(model => model.StoreId, "", new { @class = "text-danger" })
+                    </div>
+
+
+                </div>
+                <div class="form-row gap-3">
+
+                    <div class="col-md-4 ">
+
+                        <input type="button" value="Add Items" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-primary" />
                     </div>
 
                 </div>
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div class="col-md-4 ">
-                            <br />
-                            <input type="button" value="Add Items" data-bs-toggle="modal" data-bs-target="#loginModal" class="button primary" />
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
+                <div class="form-row gap-3">
+
+
+                    <table class="table table-bordered table-striped" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <td>Item</td>
+                                <td>Unit</td>
+                                <td>Price </td>
+                                <td>Quantity</td>
+                                <td>Total</td>
+                                <td> Discount</td>
+                                <td>Net</td>
+
+                            </tr>
+                        </thead>
+                        <tbody id="Items">
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="form-row">
+
+
+                    <div class="form-group col">
+                        <label asp-for="Total">Total Amount</label>
+                        <input type="text" asp-for="Total" class="form-control" placeholder="Total Amount" id="TotalAmount" readonly="readonly" />
+                        @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col">
+                        <label asp-for="Tax">Tax</label>
+                        <input type="text" asp-for="Tax" id="Tax" class="form-control" placeholder="Tax" required="required" maxlength="4" />
+                        @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class=" form-group col">
+                        <label asp-for="Net">Net</label>
+                        <input type="text" asp-for="Net" class="form-control" id="Net" placeholder="Net" readonly="readonly" />
+                        @* @Html.ValidationMessageFor(model => model.Net, "", new { @class = "text-danger" }) *@
                         <br />
-
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <td>Item</td>
-                                    <td>Unit</td>
-                                    <td>Price </td>
-                                    <td>Quantity</td>
-                                    <td>Total</td>
-                                    <td> Discount</td>
-                                    <td>Net</td>
-
-                                </tr>
-                            </thead>
-                            <tbody id="Items">
-                            </tbody>
-                        </table>
                     </div>
+
+
+
+
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <br />
-                        <div class="form-group col-md-3 col-md-offset-8">
-                            <label asp-for="Total">Total Amount</label>
-                            <input type="text" asp-for="Total" class="form-control" placeholder="Total Amount" id="TotalAmount" readonly="readonly" />
-                            @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group col-md-3 col-md-offset-8">
-                            <label asp-for="Tax">Tax</label>
-                            <input type="text" asp-for="Tax" id="Tax" class="form-control" placeholder="Tax" required="required" />
-                            @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
-
-                        </div>
-
-                        <div class=" form-group col-md-3 col-md-offset-8">
-                            <label asp-for="Net">Net</label>
-                            <input type="text" asp-for="Net" class="form-control" id="Net" placeholder="Net" readonly="readonly" />
-                            @Html.ValidationMessageFor(model => model.Net, "", new { @class = "text-danger" })
-                            <br />
-                        </div>
-
-                        <div class="col-md-3 col-md-offset-8">
-                            <input type="submit" value="Save Invoice" class="button success" id="btnSubmit" />
-                        </div>
-
+                <div class="form-row">
+                    <div class="col-md-3 ">
+                        <input type="submit" value="Save Invoice" class=" btn btn-success" id="btnSubmit" />
                     </div>
+                   
+                </div>
+                <div class="row gap-3">
+                    <a asp-action="Index" asp-controller="InvoiceOrder" class="btn btn-check">
+                        Back To List
+                    </a>
                 </div>
             </form>
             <!--modal form-->
@@ -103,40 +114,56 @@
                         <div class="modal-dialog modal-md">
                             <div class="modal-content">
                                 <h4 class="modal-header">Select Product</h4>
-                                <div class="modal-body">
-                                    <div class="container">
-                                        <div class="col-md-3">
-                                            <label class="control-label">Item</label>
-                                            @Html.DropDownList("ddlItem", new SelectList(@ViewBag.Items, "Id", "Name"), "select Item", new { @class = "form-control", id = "ddlItem" })
-                                            <label class="control-label">Unit</label>
-                                            @Html.DropDownList("ddlUnit", new SelectList(@ViewBag.Units, "Id", "Name"), "select Unit", new { @class = "form-control", id = "ddlUnit" })
+                                <form needs-validation novalidate>
+                                    <div class="modal-body">
 
-                                            <div>
+                                        <div class="container">
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <label class="control-label">Item</label>
+                                                    @Html.DropDownList("ddlItem", new SelectList(@ViewBag.Items, "Id", "Name"), "select Item", new { @class = "form-control", id = "ddlItem" })
+                                                    @* @Html.ValidationMessageFor(model => model.SaveInvoiceDetails.ItemId, "", new { @class = "text-danger" }) *@
+                                                </div>
+                                                <div class="col">
+                                                    <label class="control-label">Unit</label>
+                                                    @Html.DropDownList("ddlUnit", new SelectList(@ViewBag.Units, "Id", "Name"), "select Unit", new { @class = "form-control", id = "ddlUnit" })
+                                                    @* @Html.ValidationMessageFor(model => model.SaveInvoiceDetails.UnitId, "", new { @class = "text-danger" }) *@
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <label class="control-label">Price</label>
+                                                    @Html.Editor("Price", new { htmlAttributes = new { @class = "form-control", id = "Price", @type = "number" } })
+                                                    @* @Html.ValidationMessageFor(model => model.SaveInvoiceDetails.Price, "", new { @class = "text-danger" }) *@
+                                                </div>
+                                                <div class="col">
+                                                    <label class="control-label">Quantity</label>
+                                                    @Html.Editor("Qty", new { htmlAttributes = new { @class = "form-control", id = "Quantity", @type = "number" } })
+                                                    @* @Html.ValidationMessageFor(model => model.SaveInvoiceDetails.Qty, "", new { @class = "text-danger" }) *@
+                                                </div>
+                                                <div class="col">
+                                                    <label class="control-label">Discount</label>
+                                                    @Html.Editor("Discount", new { htmlAttributes = new { @class = "form-control", id = "ItemDiscount", @type = "number", @maxlength = "2" } })
+                                                    @* @Html.ValidationMessageFor(model => model.SaveInvoiceDetails.Discount, "", new { @class = "text-danger" }) *@
+                                                </div>
+                                            </div>
 
-                                                <label class="control-label">Price</label>
-                                                @Html.Editor("Price", new { htmlAttributes = new { @class = "form-control", id = "Price", @type = "number" } })
-                                                <br />
-                                                <label class="control-label">Quantity</label>
-                                                @Html.Editor("Quantity", new { htmlAttributes = new { @class = "form-control", id = "Quantity", @type = "number" } })
-                                                <br />
 
-                                                <label class="control-label">Discount</label>
-                                                @Html.Editor("ItemDiscount", new { htmlAttributes = new { @class = "form-control", id = "ItemDiscount", @type = "number" } })
-                                                <br />
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <div class="form-row">
+                                            <div class="col ">
+                                                <input type="button" value="Add" class=" btn btn-success" id="btnAdd" />
+                                            </div>
+                                            <div class="col ">
+                                                <input type="button" value="Close" data-bs-dismiss="modal" class=" btn btn-close" id="btnClose" />
                                             </div>
                                         </div>
 
                                     </div>
-                                </div>
-
-                                <div class="modal-footer">
-                                    <a id="btnAdd" class="btn btn-primary">
-                                        <span class="glyphicon glyphicon-plus"></span> Add
-                                    </a>
-                                    <a id="BtnClose" class="btn btn-danger" data-bs-dismiss="modal">
-                                        <span class="glyphicon glyphicon-off"></span> Close
-                                    </a>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -150,11 +177,13 @@
 @section scripts {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker3.css" rel="stylesheet" />
     <script src="~/js/invoicescript.js"></script>
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
 }
-    
+

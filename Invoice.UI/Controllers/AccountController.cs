@@ -53,12 +53,13 @@ namespace Invoice.UI.Controllers
                 var handler = new JwtSecurityTokenHandler();
                 var jwtSecurityToken = handler.ReadJwtToken(token);
                 var userId = jwtSecurityToken.Claims.First(claim => claim.Type == "UserId").Value;
-
+                var fullname = jwtSecurityToken.Claims.First(claim => claim.Type == "FullName").Value;
                 var role = jwtSecurityToken.Claims.First(claim => claim.Type == "UserRole").Value;
 
 
                 identity = new ClaimsIdentity(new[] {
                     new Claim(ClaimTypes.Name,  userId),
+                    new Claim(ClaimTypes.SerialNumber,  fullname),
                     new Claim(ClaimTypes.Role, role)
                 }, CookieAuthenticationDefaults.AuthenticationScheme);
 
